@@ -375,5 +375,12 @@ public abstract class Monster { // abstract
 	 * @return a description of the monster
 	 */
 	public abstract String getDescription();
+	
+	public void attack(Monster target) {
+		if (target.getCurrentHealth() <= this.getAttackDamage()) {
+			target.faint();
+		} else
+			target.setCurrentHealth(target.getCurrentHealth()-this.getAttackDamage());
+	}
 
 }

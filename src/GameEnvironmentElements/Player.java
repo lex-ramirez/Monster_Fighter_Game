@@ -61,4 +61,10 @@ public class Player {
     public void displayTeam() {
         //Some sort of window thing??
     }
+
+	@Override
+	public String toString() {
+		return "Player [name=" + name + ", team=" + team + ", inventory=" + inventory + "]";
+	}
+    
 }
