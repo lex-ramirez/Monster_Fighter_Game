@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collection;
 
+//
 public class PlayerDirectory {
 	//Add some randomness here?
 	//eg generateMaxHealth(int level) {
@@ -46,33 +48,59 @@ public class PlayerDirectory {
     
     
     //AI players
+    public static ArrayList<Player> getAiPlayers() {
     ArrayList<Player> aiPlayers = new ArrayList<Player>();
-    private Player beth =  new Player("Beth", new ArrayList<Monster>(), new ArrayList<Item>());
-    private Player kate =  new Player("Kate", new ArrayList<Monster>(), new ArrayList<Item>());
-    private Player tom =  new Player("Tom", new ArrayList<Monster>(), new ArrayList<Item>());
-    private Player jago =  new Player("Jago", new ArrayList<Monster>(), new ArrayList<Item>());
-    private Player annika =  new Player("Annika", new ArrayList<Monster>(), new ArrayList<Item>());
-    private Player kent =  new Player("Kent", new ArrayList<Monster>(), new ArrayList<Item>());
-    private Player sammy =  new Player("Sammy", new ArrayList<Monster>(), new ArrayList<Item>());
+    ArrayList<Monster> bethTeam = new ArrayList<Monster>(); 
+    bethTeam.add(new Archer("Loki", 25, 7, "Common", 100, 1, 20, 30, 5));
+    Player beth =  new Player("Beth", bethTeam, new ArrayList<Item>());
+    Player kate =  new Player("Kate", new ArrayList<Monster>(), new ArrayList<Item>());
+    Player tom =  new Player("Tom", new ArrayList<Monster>(), new ArrayList<Item>());
+    Player jago =  new Player("Jago", new ArrayList<Monster>(), new ArrayList<Item>());
+    Player annika =  new Player("Annika", new ArrayList<Monster>(), new ArrayList<Item>());
+    Player kent =  new Player("Kent", new ArrayList<Monster>(), new ArrayList<Item>());
+    Player sammy =  new Player("Sammy", new ArrayList<Monster>(), new ArrayList<Item>());
+    aiPlayers.add(beth);
+    aiPlayers.add(kate);
+    aiPlayers.add(tom);
+    aiPlayers.add(jago);
+    aiPlayers.add(annika);
+    aiPlayers.add(kent);
+    aiPlayers.add(sammy);
+    return aiPlayers;
+    }
+    
     
     
     //Items
-    
-    private ArrayList<Item> availableItems = new ArrayList<Item>();
-	AttackEnhancer attackEnhancer = new AttackEnhancer();
-	SmallPotion smallPotion = new SmallPotion();
-	SuperPotion superPotion = new SuperPotion();
-	
-	public void addToList() {
+	public static ArrayList<Item> addToList() {
+    	ArrayList<Item> availableItems = new ArrayList<Item>();
+		AttackEnhancer attackEnhancer = new AttackEnhancer();
+		SmallPotion smallPotion = new SmallPotion();
+		SuperPotion superPotion = new SuperPotion();
 		availableItems.add(attackEnhancer);
 		availableItems.add(smallPotion);
 		availableItems.add(superPotion);
-	}
-
-	public ArrayList<Item> getAvailableItems() {
 		return availableItems;
 	}
 
-	
+	public ArrayList<Item> getAvailableItems() {
+		return addToList();
+	}
+
+	public ArrayList<Monster> getAllMonsters() {
+		 ArrayList<Monster> monsterList = new ArrayList<Monster>();
+		 
+        monsterList.add(stJohn);
+        monsterList.add(robinHood);
+        monsterList.add(twitch);
+        monsterList.add(banshee);
+        monsterList.add(doom);
+        monsterList.add(toto);
+        monsterList.add(florence);
+        monsterList.add(hawkeye);
+        
+        return monsterList;
+        
+	}
 	
 }

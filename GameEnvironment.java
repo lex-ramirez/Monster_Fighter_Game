@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Main class for the game holding the important variables
  * and methods
@@ -5,6 +7,7 @@
  * @author sammiller
  *
  */
+//
 public class GameEnvironment {
 
 	/**
@@ -72,6 +75,13 @@ public class GameEnvironment {
 		this.player = player;
 	}
 	
+	@Override
+	public String toString() {
+		return "GameEnvironment [battleLimitPerDay=" + battleLimitPerDay + ", dayLimit=" + dayLimit + ", difficulty="
+				+ difficulty + ", points=" + points + ", dayCount=" + dayCount + ", goldCount=" + goldCount + ", shop="
+				+ shop + ", battleSetup=" + battleSetup + ", player=" + player + "]";
+	}
+
 	public int getPoints() {
 		return points;
 	}
@@ -129,15 +139,17 @@ public class GameEnvironment {
 	}
 
 	public void visitShop() {			//Will be a window: do we need a class for the window and a class for a ShopManager?
-		shop.displayInventory();
+		shop.getShopDescription();
 	}
 	
+	/*
 	public void endGame() {
 		int additionalPoints = convertStatsToPoints();
 		points = points + additionalPoints;
 		
 		displayFinalStats();
 	}
+	
 	
 	private int convertStatsToPoints() {
 		//some formula using monsters, items in inventory, and gold goes here
@@ -156,6 +168,6 @@ public class GameEnvironment {
 		catch (IllegalStateException e) {
 			endGame();
 		}
-	}
+	}*/
 	
 }

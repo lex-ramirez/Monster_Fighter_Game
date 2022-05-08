@@ -5,6 +5,7 @@ import java.util.ArrayList;
  * monsters and/or items.
  *
  */
+//
 public class Shop {
 	
 	/**
@@ -23,6 +24,17 @@ public class Shop {
 		monsterList = new ArrayList<Monster>();
 		itemList = new ArrayList<Item>();
 
+	}
+	
+	/**
+	 * Constructor method for shop which takes arguments for itemList and 
+	 * monsterList
+	 * @param monsters	the desired new monsterList
+	 * @param items		the desired new itemList
+	 */
+	public Shop(ArrayList<Monster> monsters, ArrayList<Item> items) {
+		monsterList = monsters;
+		itemList = items;
 	}
 	/**
 	 * Adds a monster to the ArrayList monsterList
@@ -119,18 +131,11 @@ public class Shop {
 			System.out.println(i + ": " + monsterList.get(i).getName() + ", Price: " + monsterList.get(i).getPrice() + " Gold");
 		}
 	}
-	
-	
-	/*
-	public static void main(String[] args) {
-		
-		Shop newShop = new Shop();
-		
-		Item attackEnhancer = new attackEnhancer();
-		newShop.addItem(attackEnhancer);
-		
-		newShop.getShopDescription();
-		*/
-		
+
+	@Override
+	public String toString() {
+		return "Shop [monsterList=" + monsterList + ", itemList=" + itemList + ", boughtMonster=" + boughtMonster
+				+ ", boughtItem=" + boughtItem + "]";
 	}
+	
 }
