@@ -1,4 +1,9 @@
+package GameEnvironmentElements;
+
 import java.util.ArrayList;
+
+import Battles.*;
+import ShopAndItems.*;
 
 /**
  * Main class for the game holding the important variables

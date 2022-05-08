@@ -1,4 +1,7 @@
+package Battles;
+
 import java.util.ArrayList;
+import GameEnvironmentElements.*;
 
 public class BattleSetup {
 
@@ -36,7 +39,6 @@ public class BattleSetup {
         case "Medium": difficultyMultiplier = 1; break;
         case "Hard": difficultyMultiplier = 1.2; break;
         default: throw new IllegalArgumentException(difficulty+" is not a valid difficulty");
-        break;
         }
 
         double dayCountMultiplier = dayCount/10 + 0.9;        //multiplier is one on day 1, then increases by .1 

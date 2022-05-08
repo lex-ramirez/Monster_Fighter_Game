@@ -1,5 +1,9 @@
+package GameEnvironmentElements;
+
 import java.util.*;
 import java.util.regex.Pattern;
+import Monsters.*;
+import ShopAndItems.*;
 
 //
 public class MainGame {

@@ -1,3 +1,5 @@
+package Monsters;
+
 /**
  * HypeMan, a subclass of monster is a monster with a special ability of
  * boosting his teammate's attacks

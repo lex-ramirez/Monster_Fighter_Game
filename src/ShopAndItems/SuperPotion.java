@@ -1,3 +1,5 @@
+package ShopAndItems;
+
 /**
 * @author Lex Ramirez
 * superPotion represents a 'Super Potion' item within the game, this inherits 

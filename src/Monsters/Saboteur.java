@@ -1,3 +1,5 @@
+package Monsters;
+
 /**
  * Saboteur is a type of monster with the special ability to weaken an
  * opposition monster's attack once per battle

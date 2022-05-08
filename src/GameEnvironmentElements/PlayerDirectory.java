@@ -1,5 +1,8 @@
+package GameEnvironmentElements;
+
 import java.util.ArrayList;
-import java.util.Collection;
+import Monsters.*;
+import ShopAndItems.*;
 
 //
 public class PlayerDirectory {

@@ -1,3 +1,5 @@
+package ShopAndItems;
+
 /**
  * @author Lex Ramirez 
  * attackEnhancer represents an 'Attack Enhancer' item within the game

@@ -1,3 +1,5 @@
+package ShopAndItems;
+
 /**
 * @author Lex Ramirez
 * attackDamagePotion represents an 'Attack Damage Potion' item within the game

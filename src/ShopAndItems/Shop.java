@@ -1,4 +1,8 @@
+package ShopAndItems;
+
 import java.util.ArrayList;
+import Monsters.*;
+
 /**
  * @author Lex Ramirez
  * This is the shop class, where the player can buy and sell

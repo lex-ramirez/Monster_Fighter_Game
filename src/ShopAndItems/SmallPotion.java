@@ -1,3 +1,5 @@
+package ShopAndItems;
+
 /**
 * @author Lex Ramirez
 * smallPotion subclass represents a 'Small Potion' item within the game,

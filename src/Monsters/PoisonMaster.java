@@ -1,3 +1,5 @@
+package Monsters;
+
 /**
  * PoisonMaster is a type of Monster that does a small amount of damage to an 
  * oppostion Monster during a battle for a certain number of turns

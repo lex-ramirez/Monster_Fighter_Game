@@ -1,3 +1,5 @@
+package Monsters;
+
 /**
  * Archer sub class of Monster: Special attack is a multi attack which deals
  * damage to all members of an opposition team

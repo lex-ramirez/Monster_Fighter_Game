@@ -1,3 +1,5 @@
+package Monsters;
+
 /**
  * Healer sub-class of Monster Is a monster with a special ability to
  * 

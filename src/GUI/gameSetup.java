@@ -53,7 +53,7 @@ public class gameSetup {
 		frame.getContentPane().setLayout(null);
 
 		JLabel namePromptLabel = new JLabel("Input your character's name:");
-		String name = null; // An idea that doesn't work
+		//String name = null; // An idea that doesn't work
 		namePromptLabel.setBounds(42, 33, 244, 16);
 		frame.getContentPane().add(namePromptLabel);
 
@@ -107,7 +107,7 @@ public class gameSetup {
 					nameErrorLabel.setText(errorText);
 				} else {
 					nameErrorLabel.setText("");
-					name = textField.getText(); // How do we ensure that the player enters a valid name? i.e
+					//name = textField.getText(); // How do we ensure that the player enters a valid name? i.e
 				} // can't progress with an invalid name if this inner function
 			} // doesn't let me change anything?
 		});

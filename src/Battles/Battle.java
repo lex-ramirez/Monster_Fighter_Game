@@ -1,3 +1,7 @@
+package Battles;
+
+import GameEnvironmentElements.*;
+
 public class Battle {
 
     private Player opposition;

@@ -1,4 +1,9 @@
+package GameEnvironmentElements;
+
 import java.util.ArrayList;
+import Monsters.*;
+import ShopAndItems.*;
+
 public class Player {
 
     private String name;
