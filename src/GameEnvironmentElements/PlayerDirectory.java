@@ -54,7 +54,7 @@ public class PlayerDirectory {
     public static ArrayList<Player> getAiPlayers() {
     ArrayList<Player> aiPlayers = new ArrayList<Player>();
     ArrayList<Monster> bethTeam = new ArrayList<Monster>(); 
-    bethTeam.add(new Archer("Loki", 25, 7, "Common", 100, 1, 20, 30, 5));
+    bethTeam.add(new Archer("Loki", 25, 6, "Common", 100, 1, 20, 30, 9));
     Player beth =  new Player("Beth", bethTeam, new ArrayList<Item>());
     Player kate =  new Player("Kate", new ArrayList<Monster>(), new ArrayList<Item>());
     Player tom =  new Player("Tom", new ArrayList<Monster>(), new ArrayList<Item>());

@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GameSetupScreen {
 
@@ -59,7 +61,16 @@ public class GameSetupScreen {
 		frame.getContentPane().add(btnNewButton_1);
 
 		JButton btnNewButton_2 = new JButton("New Game");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("PENIS");
+			}
+		});
 		btnNewButton_2.setBounds(273, 93, 117, 29);
 		frame.getContentPane().add(btnNewButton_2);
+		
+		JLabel lblNewLabel_2 = new JLabel("Cunt");
+		lblNewLabel_2.setBounds(149, 255, 61, 16);
+		frame.getContentPane().add(lblNewLabel_2);
 	}
 }

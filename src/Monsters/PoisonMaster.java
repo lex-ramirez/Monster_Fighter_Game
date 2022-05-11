@@ -27,7 +27,7 @@ public class PoisonMaster extends Monster {
 	 * @param maxHealth				the health cap of the poison master
 	 * @param attackDamage			the base attack damage of the poison master
 	 * @param rarity				the rarity of the poison master
-	 * @param price					the value/price of the popison master
+	 * @param price					the value/price of the poison master
 	 * @param level					the current level of the poison master
 	 * @param xp					the current xp level of the poison master
 	 * @param levelUpXpAmount		the amount of xp required for the poison master to level up

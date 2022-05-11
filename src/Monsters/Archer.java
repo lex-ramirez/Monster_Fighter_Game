@@ -112,8 +112,8 @@ public class Archer extends Monster {
 	 */
 	@Override
 	public String getSpecialAbilityDescription() {
-		return "The archer can launch a devestating volley of arrows dealing " + volleyDamage
-				+ "damage to every member of the opposition team";
+		return "The archer can launch a devastating volley of arrows dealing " + volleyDamage
+				+ " damage to every member of the opposition team";
 	}
 
 	/**

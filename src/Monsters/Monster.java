@@ -394,6 +394,7 @@ public abstract class Monster { // abstract
 	
 	public void attack(Monster target) {
 		if (target.getCurrentHealth() <= this.getAttackDamage()) {
+			target.setCurrentHealth(0);
 			target.faint();
 		} else
 			target.setCurrentHealth(target.getCurrentHealth()-this.getAttackDamage());
