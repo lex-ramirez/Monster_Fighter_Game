@@ -31,7 +31,7 @@ public class HypeMan extends Monster {
 	 */
 	public HypeMan(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
 			int levelUpXpAmount, int damageBoost) {
-		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount);
+		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, true);
 		this.damageBoost = damageBoost;
 	}
 

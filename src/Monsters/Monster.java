@@ -49,6 +49,11 @@ public abstract class Monster { // abstract
 	 * whether or not the monster has fainted (as opposed to being conscious)
 	 */
 	private boolean fainted = false;
+	/**
+	 * Whether the Monster's special attack is friendly (i.e. whether it affects a 
+	 * teammate rather than an opposition monster)
+	 */
+	private boolean specialIsFriendly;
 
 	/**
 	 * Initialises the variables of an instance of the Monster class
@@ -68,7 +73,7 @@ public abstract class Monster { // abstract
 	 * 
 	 */
 	public Monster(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
-			int levelUpXpAmount) {
+			int levelUpXpAmount, boolean specialIsFriendly) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.attackDamage = attackDamage;
@@ -78,6 +83,7 @@ public abstract class Monster { // abstract
 		this.level = level;
 		this.xp = xp;
 		this.levelUpXpAmount = levelUpXpAmount;
+		this.specialIsFriendly = specialIsFriendly;
 	}
 
 	/**
@@ -88,8 +94,8 @@ public abstract class Monster { // abstract
 	public String toString() {
 		return String.format(
 				"Monster %s: maxHealth=%d, attackDamage=%d, currentHealth=%d, "
-						+ "rarity=%s, price=%d, level=%d, xp=%d, levelUpXpAmount=%d, fainted=%s",
-				name, maxHealth, attackDamage, currentHealth, rarity, price, level, xp, levelUpXpAmount, fainted);
+						+ "rarity=%s, price=%d, level=%d, xp=%d, levelUpXpAmount=%d, fainted=%s, specialIsFriendly=%s",
+				name, maxHealth, attackDamage, currentHealth, rarity, price, level, xp, levelUpXpAmount, fainted, specialIsFriendly);
 	}
 
 	/**
@@ -292,6 +298,16 @@ public abstract class Monster { // abstract
 			fainted = false;
 		}
 	}
+	
+	/**
+	 * returns whether the Monster's special attack is friendly (i.e. whether it affects a 
+	 * teammate rather than an opposition monster)
+	 * @return <code>true</code> if the special ability affects a teammate, and <code>false</code> otherwise
+	 */
+	public boolean getSpecialIsFriendly() {
+		return specialIsFriendly;
+	}
+
 
 	/**
 	 * Levels the monster up and increases some of its stats if its xp meets the

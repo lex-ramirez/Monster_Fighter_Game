@@ -40,7 +40,7 @@ public class Archer extends Monster {
 	public Archer(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
 			int levelUpXpAmount, int volleyDamage) {
 
-		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount);
+		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, false);
 		this.volleyDamage = volleyDamage;
 	}
 

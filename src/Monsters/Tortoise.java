@@ -22,7 +22,7 @@ public class Tortoise extends Monster {
      */
     public Tortoise(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
             int levelUpXpAmount) {
-        super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount);
+        super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, true);
         // TODO Auto-generated constructor stub
     }
 

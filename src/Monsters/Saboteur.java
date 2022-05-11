@@ -32,7 +32,7 @@ public class Saboteur extends Monster {
 	 */
 	public Saboteur(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
 			int levelUpXpAmount, int weakenAmount) {
-		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount);
+		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, false);
 		this.weakenAmount = weakenAmount;
 	}
 

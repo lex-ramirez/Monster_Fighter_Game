@@ -36,7 +36,7 @@ public class PoisonMaster extends Monster {
 	 */
 	public PoisonMaster(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
 			int levelUpXpAmount, int poisonDamage, int poisonDuration) {
-		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount);
+		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, false);
 		this.poisonDamage = poisonDamage;
 		this.poisonDuration = poisonDuration;
 	}
