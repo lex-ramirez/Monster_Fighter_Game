@@ -36,7 +36,7 @@ public class Healer extends Monster {
 	public Healer(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
 			int levelUpXpAmount, int healAmount) {
 
-		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, true, 1, false, "healer-monster-drawing.png");
+		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount);
 		this.healAmount = healAmount;
 	}
 
@@ -99,7 +99,6 @@ public class Healer extends Monster {
 	 */
 	@Override
 	public void useSpecialAbility(Monster target) {
-		setSpecialTarget(target);
 		if (target.hasFainted())
 			throw new IllegalStateException("This Monster has fainted, and thus can't be healed");
 		else if (target.getCurrentHealth() == target.getMaxHealth())
@@ -161,11 +160,5 @@ public class Healer extends Monster {
 						+ "rarity=%s, price=%d, level=%d, xp=%d, levelUpXpAmount=%d, fainted=%s, healAmount=%d",
 				getName(), getMaxHealth(), getAttackDamage(), getCurrentHealth(), getRarity(), getPrice(), getLevel(),
 				getXp(), getLevelUpXpAmount(), hasFainted(), getHealAmount());
-	}
-
-	@Override
-	public void undoSpecial(Monster target) {
-		return;
-		
 	}
 }

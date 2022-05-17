@@ -2,6 +2,8 @@ package GameEnvironmentElements;
 
 import java.util.*;
 import java.util.regex.Pattern;
+
+import GUI.TitleScreen;
 import Monsters.*;
 import ShopAndItems.*;
 
@@ -90,16 +92,22 @@ public class MainGame {
 		return shop;
 	}
 	
+	
 	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
+		
+		TitleScreen newWindow = new TitleScreen();
+	}
+	
+	//public static void main(String[] args) {
+		//Scanner s = new Scanner(System.in);
 		
         //Creates a playerDirectory class, important for the monsters, shop, and battle
         //PlayerDirectory playerDirectory = new PlayerDirectory();
 		
 		//int dayLimit = getDayLimit(s);
 		//String difficulty = getDifficulty(s);
-		String name = getPlayerName(s);
-		System.out.println(name);/*
+		//String name = getPlayerName(s);
+		/*System.out.println(name);
 		ArrayList<Monster> starterTeam = chooseStarter(s, playerDirectory);
 		Player player = new Player(name, starterTeam, new ArrayList<Item>());
 		Shop shop = initialiseShop(playerDirectory);
@@ -112,7 +120,7 @@ public class MainGame {
 		GameEnvironment gameEnvironment = new GameEnvironment(1, dayLimit, difficulty,0, 1, 0, shop, battleSetup, player);
 		System.out.println("\n" + gameEnvironment);*/
 		
-	}
+	//}
 }
 
 //Sam has edited MainGame, PlayerDirectory, shop, gamEnvironment, and all items

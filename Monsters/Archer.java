@@ -40,7 +40,7 @@ public class Archer extends Monster {
 	public Archer(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
 			int levelUpXpAmount, int volleyDamage) {
 
-		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, false, 1, false, "archer-monster-drawing.png");
+		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount);
 		this.volleyDamage = volleyDamage;
 	}
 
@@ -98,7 +98,6 @@ public class Archer extends Monster {
 	 */
 	@Override
 	public void useSpecialAbility(Monster target) {
-		setSpecialTarget(target);
 		if (target.hasFainted())
 			throw new IllegalStateException("This monster has already fainted: no more damage can be dealt to it");
 		else
@@ -113,8 +112,8 @@ public class Archer extends Monster {
 	 */
 	@Override
 	public String getSpecialAbilityDescription() {
-		return "The archer can launch a devastating volley of arrows dealing " + volleyDamage
-				+ " damage to every member of the opposition team";
+		return "The archer can launch a devestating volley of arrows dealing " + volleyDamage
+				+ "damage to every member of the opposition team";
 	}
 
 	/**
@@ -160,11 +159,5 @@ public class Archer extends Monster {
 						+ "rarity=%s, price=%d, level=%d, xp=%d, levelUpXpAmount=%d, fainted=%s, volleyDamage=%d",
 				getName(), getMaxHealth(), getAttackDamage(), getCurrentHealth(), getRarity(), getPrice(), getLevel(),
 				getXp(), getLevelUpXpAmount(), hasFainted(), volleyDamage);
-	}
-
-	@Override
-	public void undoSpecial(Monster target) {
-		//Does nothing, as this monster does not apply a temporary boost
-		
 	}
 }

@@ -19,7 +19,6 @@ public class gameSetup {
 
 	private JFrame frame;
 	private JTextField textField;
-	private String name = null;
 
 	/**
 	 * Launch the application.
@@ -108,9 +107,9 @@ public class gameSetup {
 					nameErrorLabel.setText(errorText);
 				} else {
 					nameErrorLabel.setText("");
-					name = textField.getText();
-				}
-			}
+					//name = textField.getText(); // How do we ensure that the player enters a valid name? i.e
+				} // can't progress with an invalid name if this inner function
+			} // doesn't let me change anything?
 		});
 		nameConfirmButton.setBounds(497, 28, 117, 29);
 		frame.getContentPane().add(nameConfirmButton);
