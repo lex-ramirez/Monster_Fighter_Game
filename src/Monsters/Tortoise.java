@@ -1,14 +1,16 @@
 package Monsters;
 
 /*
- * The Tortoise subclass of Monster has a special ability
+ * The Tortoise subclass of Monster has a special ability to shield a teammate (or itself)
+ * from all damage for the remainder of one turn per battle
  * 
  * @author sammiller
  *
  */
 public class Tortoise extends Monster {
 
-    /*
+	private int previousHealth;
+    /**
      * instantiates a tortoise
      * 
      * @param name
@@ -22,32 +24,47 @@ public class Tortoise extends Monster {
      */
     public Tortoise(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
             int levelUpXpAmount) {
-        super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, true);
-        // TODO Auto-generated constructor stub
+        super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, true, 1, false, "tortoise-monster-drawing.png");
+        previousHealth = maxHealth;
     }
 
     @Override
     public void increaseStat() {
-        // TODO Auto-generated method stub
+    	switch (getLevel() % 2) {
+		case 0:
+			setMaxHealth((int) Math.round(getMaxHealth() * 1.2));
+			break;
+		case 1:
+			setAttackDamage((int) Math.round(getAttackDamage() * 1.2));
+			break;
+		}
 
     }
 
     @Override
     public void useSpecialAbility(Monster target) {
-        // TODO Auto-generated method stub
+		setSpecialTarget(target);
+        previousHealth = target.getCurrentHealth();
+        target.setCurrentHealth(1000000000);
 
     }
 
     @Override
     public String getSpecialAbilityDescription() {
-        // TODO Auto-generated method stub
-        return null;
+        return "The Tortoise has a special ability to shield " + getSpecialTarget().getName()
+        		+ " from all damage for the remainder of one turn per battle";
     }
 
     @Override
     public String getDescription() {
-        // TODO Auto-generated method stub
-        return null;
+        return "The Tortoise subclass of Monster has a special ability to shield a teammate (or itself)"	//Doesn't have to be early on the roster, as the AI
+        		+ " from all damage for the remainder of one turn per battle.";								//AI always attacks after the special is applied
     }
+
+	@Override
+	public void undoSpecial(Monster target) {
+		target.setCurrentHealth(previousHealth);
+		
+	}
 
 }

@@ -8,10 +8,13 @@ package Monsters;
  *
  */
 public class HypeMan extends Monster {
+	//Change name to hypeBeast
 
 	/**
 	 * The amount of extra damage per base attack the HypeMan gives to each of his
 	 * teammates
+	 * 
+	 * ***FOR THE REST OF THE TURN***
 	 */
 	private int damageBoost;
 
@@ -31,7 +34,7 @@ public class HypeMan extends Monster {
 	 */
 	public HypeMan(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
 			int levelUpXpAmount, int damageBoost) {
-		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, true);
+		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, true, 1, true, "hypeman-monster-drawing.png");
 		this.damageBoost = damageBoost;
 	}
 
@@ -86,6 +89,7 @@ public class HypeMan extends Monster {
 	 */
 	@Override
 	public void useSpecialAbility(Monster target) {
+		setSpecialTarget(target);
 		target.setAttackDamage(target.getAttackDamage() + damageBoost);
 
 	}
@@ -97,7 +101,7 @@ public class HypeMan extends Monster {
 	 * @param target the teammate whose attack boost is being removed
 	 * 
 	 */
-	public void undoSpecialAbility(Monster target) {
+	public void undoSpecial(Monster target) {
 		target.setAttackDamage(target.getAttackDamage() - damageBoost);
 	}
 
@@ -108,7 +112,8 @@ public class HypeMan extends Monster {
 	 */
 	@Override
 	public String getSpecialAbilityDescription() {
-		return "Boosts all team members' attacks by " + damageBoost + " damage points for one turn";
+		return "Boosts all team members' base attacks by " + damageBoost + " damage points for the "
+				+ "remainder of one turn";
 	}
 
 	/**
@@ -118,7 +123,9 @@ public class HypeMan extends Monster {
 	 */
 	@Override
 	public String getDescription() {
-		return "The hype-man can boost all of his team members' attack damge for one turn per battle";
+		return "The hype-man can boost all of his team members' attack damge for one turn per battle"
+				+ "You might want to use him in the first slot in your team, as he only boosts the teammates who"
+				+"have not yet used their attacks";
 	}
 
 	/**
@@ -133,6 +140,5 @@ public class HypeMan extends Monster {
 						+ "rarity=%s, price=%d, level=%d, xp=%d, levelUpXpAmount=%d, fainted=%s, damageBoost=%d",
 				getName(), getMaxHealth(), getAttackDamage(), getCurrentHealth(), getRarity(), getPrice(), getLevel(),
 				getXp(), getLevelUpXpAmount(), hasFainted(), getDamageBoost());
-	}
-
+	}	
 }

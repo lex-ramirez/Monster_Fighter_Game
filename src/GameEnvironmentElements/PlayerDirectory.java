@@ -53,16 +53,18 @@ public class PlayerDirectory {
     //AI players
     public static ArrayList<Player> getAiPlayers() {
     ArrayList<Player> aiPlayers = new ArrayList<Player>();
-    ArrayList<Monster> bethTeam = new ArrayList<Monster>(); 
-    bethTeam.add(new Archer("Loki", 25, 6, "Common", 100, 1, 20, 30, 9));
-    Player beth =  new Player("Beth", bethTeam, new ArrayList<Item>());
+    ArrayList<Monster> ai1Team = new ArrayList<Monster>(); 
+    ai1Team.add(new Tortoise("AI Tortoise", 29, 3, "rare", 145, 2, 5, 7));
+    ai1Team.add(new Archer("AI Archer", 25, 5, "Common", 100, 1, 20, 30, 4));
+    ai1Team.add(new Saboteur("AI Saboteur", 23, 4, "rare", 110, 3, 12, 15, 3));
+    Player ai1 =  new Player("AI 1", ai1Team, new ArrayList<Item>());
     Player kate =  new Player("Kate", new ArrayList<Monster>(), new ArrayList<Item>());
     Player tom =  new Player("Tom", new ArrayList<Monster>(), new ArrayList<Item>());
     Player jago =  new Player("Jago", new ArrayList<Monster>(), new ArrayList<Item>());
     Player annika =  new Player("Annika", new ArrayList<Monster>(), new ArrayList<Item>());
     Player kent =  new Player("Kent", new ArrayList<Monster>(), new ArrayList<Item>());
     Player sammy =  new Player("Sammy", new ArrayList<Monster>(), new ArrayList<Item>());
-    aiPlayers.add(beth);
+    aiPlayers.add(ai1);
     aiPlayers.add(kate);
     aiPlayers.add(tom);
     aiPlayers.add(jago);
@@ -75,13 +77,14 @@ public class PlayerDirectory {
     
     
     //Items
-	public static ArrayList<Item> addToList() {
+    //removed static
+	public ArrayList<Item> addToList() {
     	ArrayList<Item> availableItems = new ArrayList<Item>();
 		AttackEnhancer attackEnhancer = new AttackEnhancer();
-		SmallPotion smallPotion = new SmallPotion();
+		//SmallPotion smallPotion = new SmallPotion();
 		SuperPotion superPotion = new SuperPotion();
 		availableItems.add(attackEnhancer);
-		availableItems.add(smallPotion);
+		//availableItems.add(smallPotion);
 		availableItems.add(superPotion);
 		return availableItems;
 	}

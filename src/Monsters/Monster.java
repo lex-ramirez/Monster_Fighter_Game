@@ -54,6 +54,23 @@ public abstract class Monster { // abstract
 	 * teammate rather than an opposition monster)
 	 */
 	private boolean specialIsFriendly;
+	/**
+	 * How long the special ability lasts
+	 */
+	private int specialDuration;
+	/**
+	 * the target of the monster's special attack
+	 */
+	private Monster specialTarget = null;
+	/**
+	 * whether the monster's special ability affects one monster only
+	 * or a whole team.
+	 */
+	private boolean teamWideSpecial;
+	/**
+	 * The file name for the drawing of the monster to be used in the gui
+	 */
+	private String drawingId;
 
 	/**
 	 * Initialises the variables of an instance of the Monster class
@@ -73,7 +90,8 @@ public abstract class Monster { // abstract
 	 * 
 	 */
 	public Monster(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
-			int levelUpXpAmount, boolean specialIsFriendly) {
+			int levelUpXpAmount, boolean specialIsFriendly, int specialDuration, boolean teamWideSpecial, String drawingId) {
+		//update javadoc params
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.attackDamage = attackDamage;
@@ -84,6 +102,9 @@ public abstract class Monster { // abstract
 		this.xp = xp;
 		this.levelUpXpAmount = levelUpXpAmount;
 		this.specialIsFriendly = specialIsFriendly;
+		this.specialDuration = specialDuration;
+		this.teamWideSpecial = teamWideSpecial;
+		this.drawingId = drawingId;
 	}
 
 	/**
@@ -260,6 +281,14 @@ public abstract class Monster { // abstract
 	}
 
 	/**
+	 * Returns the filename of the drawing to be used in the GUI
+	 * @return filename of drawing of the monster
+	 */
+	public String getDrawingId() {
+		return drawingId;
+	}
+
+	/**
 	 * Yields a boolean of whether or not the monster has fainted
 	 * 
 	 * @return <code>true<\code> if the monster has fainted; <code>false<\code>
@@ -306,6 +335,43 @@ public abstract class Monster { // abstract
 	 */
 	public boolean getSpecialIsFriendly() {
 		return specialIsFriendly;
+	}
+	/**
+	 * Returns how many turns for which the special ability lasts
+	 * @return how long the special lasts
+	 */
+	public int getSpecialDuration() {
+		return specialDuration;
+	}
+	/**
+	 * sets how long the special should last
+	 * @param specialDuration	the desired length for the special to last
+	 */
+	public void setSpecialDuration(int specialDuration) {
+		this.specialDuration = specialDuration;
+	}
+	/**
+	 * Returns the target for this monster's special attack
+	 * @return the target for this monster's special attack
+	 */
+	public Monster getSpecialTarget() {
+		return specialTarget;
+	}
+	/**
+	 * Sets the special attack's target
+	 * @param specialTarget the new target for this monster's special attack
+	 */
+	public void setSpecialTarget(Monster specialTarget) {
+		this.specialTarget = specialTarget;
+	}
+
+	/**
+	 * Checks whether this monster's special attack is used for a whole team
+	 * or for a specific target monster
+	 * @return <code>true</code> if the ability is team-wide, and <code>false</code> otherwise
+	 */
+	public boolean isTeamWideSpecial() {
+		return teamWideSpecial;
 	}
 
 
@@ -367,6 +433,7 @@ public abstract class Monster { // abstract
 	 * 
 	 */
 	public abstract void increaseStat();
+	//Could use a rng here?
 
 	/**
 	 * Uses the monster's special ability if it has not been used in the current
@@ -399,5 +466,7 @@ public abstract class Monster { // abstract
 		} else
 			target.setCurrentHealth(target.getCurrentHealth()-this.getAttackDamage());
 	}
+	
+	public abstract void undoSpecial(Monster target);
 
 }

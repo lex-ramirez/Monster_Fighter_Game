@@ -16,11 +16,6 @@ public class PoisonMaster extends Monster {
 	private int poisonDamage;
 	
 	/**
-	 * the number of turns for which the damage is dealt to an opposition monster
-	 */
-	private int poisonDuration;
-	
-	/**
 	 * Makes a PoisonMaster object
 	 * 
 	 * @param name					the name of the poison master
@@ -31,14 +26,13 @@ public class PoisonMaster extends Monster {
 	 * @param level					the current level of the poison master
 	 * @param xp					the current xp level of the poison master
 	 * @param levelUpXpAmount		the amount of xp required for the poison master to level up
-	 * @param poisonDamage			the amount of damage dealt by the poison to an iopposition monster per turn
+	 * @param poisonDamage			the amount of damage dealt by the poison to an opposition monster per turn
 	 * @param poisonDuration		the number of turns for which the poison master deals damage to an opposition monster
 	 */
 	public PoisonMaster(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
 			int levelUpXpAmount, int poisonDamage, int poisonDuration) {
-		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, false);
+		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, false, poisonDuration, false, "poison-master-monster-drawing.png");
 		this.poisonDamage = poisonDamage;
-		this.poisonDuration = poisonDuration;
 	}
 
 	/**
@@ -60,25 +54,6 @@ public class PoisonMaster extends Monster {
 	}
 	
 	/**
-	 * Yields the number of turns for which the poison master damages an opposition monster
-	 * 
-	 * @return	the number of turns for which the poison master attacks an opposition monster
-	 */
-	public int getPoisonDuration() {
-		return poisonDuration;
-	}
-	
-	/**
-	 * Sets the poisonDuration of the poison master to some new value
-	 * 
-	 * @param duration	the desired new number of turns for the poison master to 
-	 * affect an opposition monster
-	 */
-	public void setPoisonDuration(int duration) {
-		poisonDuration = duration;
-	}
-	
-	/**
 	 * Increases one of the poison master's stats (chosen from maxHealth, attackDamage,
 	 * poisonDamage, poisonDuration) based on the level (the stat chosen to be increased is on a cycle
 	 * so it changes each time the poison master levels up)
@@ -96,7 +71,7 @@ public class PoisonMaster extends Monster {
 			setPoisonDamage((int) Math.round(getPoisonDamage() * 1.2));
 			break;
 		case 3: 
-			setPoisonDuration((int) getPoisonDuration() + 1);
+			setSpecialDuration((int) getSpecialDuration() + 1);
 			break;
 		}
 	}
@@ -107,6 +82,7 @@ public class PoisonMaster extends Monster {
 	 */
 	@Override
 	public void useSpecialAbility(Monster target) {
+		setSpecialTarget(target);
 		if (target.hasFainted())
 			throw new IllegalStateException("This monster has already fainted: no more damage can be dealt to it");
 		else
@@ -120,7 +96,7 @@ public class PoisonMaster extends Monster {
 	 */
 	@Override
 	public String getSpecialAbilityDescription() {
-		return String.format("Deals %d damage to an opposition monster for %d turns", poisonDamage, poisonDuration);
+		return String.format("Deals %d damage to an opposition monster for %d turns", poisonDamage, getSpecialDuration());
 	}
 	
 	/**
@@ -132,6 +108,11 @@ public class PoisonMaster extends Monster {
 	public String getDescription() {
 		return "The poison master uses their array of poisons to, once per battle, deal "
 				+ "damage to an opposition monster for a set number of turns";
+	}
+
+	@Override
+	public void undoSpecial(Monster target) {
+		//Does nothing, as this monster does not apply a temporary boost
 	}
 
 }

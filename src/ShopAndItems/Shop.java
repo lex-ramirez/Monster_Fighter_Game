@@ -69,6 +69,7 @@ public class Shop {
 		return itemList;
 	}
 	
+	//Could be a good idea for these to throw an IllegalArgumentException if the player doesn't have enough gold
 	/**
 	 * 'Buys' a monster at a specified position in the ArrayList, removes that monster and
 	 * returns it.

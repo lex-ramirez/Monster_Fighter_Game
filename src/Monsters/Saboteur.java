@@ -32,7 +32,7 @@ public class Saboteur extends Monster {
 	 */
 	public Saboteur(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
 			int levelUpXpAmount, int weakenAmount) {
-		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, false);
+		super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, false, 1, true, "saboteur-monster-drawing.png");
 		this.weakenAmount = weakenAmount;
 	}
 
@@ -83,6 +83,7 @@ public class Saboteur extends Monster {
 	 */
 	@Override
 	public void useSpecialAbility(Monster target) {
+		setSpecialTarget(target);
 		target.setAttackDamage(target.getAttackDamage() - weakenAmount);
 
 	}
@@ -94,7 +95,7 @@ public class Saboteur extends Monster {
 	 * @param target the enemy monster whose attack damage is being restored
 	 * 
 	 */
-	public void undoSpecialAbility(Monster target) {
+	public void undoSpecial(Monster target) {
 		target.setAttackDamage(target.getAttackDamage() + weakenAmount);
 	}
 
@@ -105,8 +106,8 @@ public class Saboteur extends Monster {
 	 */
 	@Override
 	public String getSpecialAbilityDescription() {
-		return String.format("Applies a weakening effect of %d hit pointsto an " + "opposition monster's base attack",
-				getWeakenAmount());
+		return String.format("The Saboteur applies a weakening effect of %d hit points to %s's base attack",
+				getWeakenAmount(), getSpecialTarget().getName());
 	}
 
 	/**
