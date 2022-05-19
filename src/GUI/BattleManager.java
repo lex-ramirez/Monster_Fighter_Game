@@ -44,39 +44,25 @@ public class BattleManager {
 		closeBattleWindow(battleWindow);
 	}
 	
+	public void launchInventory() {
+		BattleInventory window = new BattleInventory(this);
+	}
+	
+	public void closeInventory(BattleInventory inventory) {
+		inventory.closeWindow();
+	}
+	
 	public void playBattle(BattleForWindow battle) {
 		int seed = (int) System.currentTimeMillis() % 1000000000 % 10000;
     	Random rng = new Random(seed);
     	boolean fightIsOver = false;    
     	
 		System.out.println(battle.displayBattleState());
-		
-		while (!fightIsOver) {
-			battle.setTurnNumber(battle.getTurnNumber()+1);												//Increment the turns counter
-			
-			battle.executeLingeringSpecials();														//Execute the lingering specials as required
-    		
-    		//for (int turn = 0; turn < battle.getMainPlayer().getTeam().size(); turn++)					//Player takes turn 
-    			
-				//battle.chooseAttack(battle.getMainPlayer(), targetIndex, turnTypeIndex);
-    		
-    		if (battle.hasBattleEnded())
-    			break;
-    		
-    		battle.aiTakesTurn(rng);
-			
-			if (battle.hasBattleEnded())
-    			break;
-			
-			battle.undoLingeringSpecials();
-			
-			System.out.println(battle.displayBattleState());
-			
-		}
+/*
 		if (battle.isPlayerHasWon())
     		System.out.println("You won!");
     	else
-    		System.out.println("You lost :(");
+    		System.out.println("You lost :("); */
     	//Apply rewards
     	//Multiply points based on progression through (i.e. number of turns) if lost
     	//undo all the boosts and stuff
@@ -92,7 +78,8 @@ public class BattleManager {
 		starterTeam.add(myHypeMan);
 		starterTeam.add(myPoisonMaster);
 		starterTeam.add(myHealer);
-		Player testPlayer = new Player("Me!", starterTeam, new ArrayList<Item>());
+		int[] inv = {0, 0, 0, };
+		Player testPlayer = new Player("Me!", starterTeam, inv);
 		/*
 		Battle battle = new Battle(testPlayer, PlayerDirectory.getAiPlayers().get(0), 100, 100);
 		BattleManager manager = new BattleManager(battle);

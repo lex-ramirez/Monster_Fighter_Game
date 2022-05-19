@@ -9,7 +9,17 @@ package ShopAndItems;
  */
 //
 public class AttackEnhancer extends Item {
-
+	/**
+	 * The index of this item's counter in the player's inventory
+	 */
+	int inventoryIndex = 1;
+	/**
+	 * gets the index of this item's counter in the player's inventory
+	 * @return the index of this item's counter in the player's inventory
+	 */
+    public int getInventoryIndex() {
+		return inventoryIndex;
+	   }
 
     /**
      * Constructor method for attackEnhancer

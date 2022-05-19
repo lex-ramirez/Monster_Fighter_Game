@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 
@@ -32,6 +33,7 @@ public class BattleWindow {
 	private JFrame frame;
 	private BattleManager manager;
 	private JLabel prompt; 
+	private Random rng;
 
 
 	private int HEALTH_BAR_WIDTH = 180;
@@ -41,13 +43,15 @@ public class BattleWindow {
 	private String CHOOSE_ATTACK_PROMPT = "Choose whether you want to use your base attack or your special ability:";
 
 	int targetIndex;
-	int turnTypeIndex;
-	boolean buttonPushed = false;
+	int turnTypeIndex; // is this used?
+	int playerTurnIndex = 0;
 	
 	/**
 	 * Create the application.
 	 */
 	public BattleWindow(BattleManager manager) {
+		int seed = (int) System.currentTimeMillis() % 1000000000 % 10000;
+    	this.rng = new Random(seed);
 		this.manager = manager;
 		initialize();
 		frame.setVisible(true);
@@ -76,14 +80,7 @@ public class BattleWindow {
 	public void setTurnTypeIndex(int turnTypeIndex) {
 		this.turnTypeIndex = turnTypeIndex;
 	}
-	
-	public boolean isButtonPushed() {
-		return buttonPushed;
-	}
 
-	public void setButtonPushed(boolean buttonPushed) {
-		this.buttonPushed = buttonPushed;
-	}
 /*
 	public synchronized int chooseTurnType () {
 		buttonPushed = false;
@@ -126,11 +123,18 @@ public class BattleWindow {
 			public void mousePressed(MouseEvent e) {
 				border.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 				setTargetIndex(index);
-				System.out.println(getTargetIndex());
 			}
 			public void mouseReleased(MouseEvent e) {
 				border.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-
+				if (playerTurnIndex < manager.getBattle().getMainPlayer().getTeam().size()) {
+					manager.getBattle().playerBaseAttack(playerTurnIndex, getTargetIndex());
+					playerTurnIndex++;
+				}
+				if (playerTurnIndex == manager.getBattle().getMainPlayer().getTeam().size()) {
+					playerTurnIndex = 0;
+					manager.getBattle().aiTakesTurn(rng);
+					System.out.println(manager.getBattle().displayBattleState());
+				}
 			}
 		});
 		frame.getContentPane().add(border);
@@ -198,8 +202,9 @@ public class BattleWindow {
 		JButton baseAttackButton = new JButton("Base Attack");
 		baseAttackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setTurnTypeIndex(0);
-				setButtonPushed(true);
+				setTurnTypeIndex(0);/*
+				manager.getBattle().playerBaseAttack(playerTurnIndex, targetIndex);
+				manager.getBattle().displayBattleState(); */
 			}
 		});
 		baseAttackButton.setBounds(100, 550, 200, 100);
@@ -208,14 +213,18 @@ public class BattleWindow {
 		JButton SpecialAbilityButton = new JButton("Special Attack");
 		SpecialAbilityButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setTurnTypeIndex(1);
-				setButtonPushed(true);
+				setTurnTypeIndex(0);
 			}
 		});
 		SpecialAbilityButton.setBounds(500, 550, 200, 100);
 		frame.getContentPane().add(SpecialAbilityButton);
 		
 		JButton inventoryButton = new JButton("Open Inventory");
+		inventoryButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manager.launchInventory();
+			}
+		});
 		inventoryButton.setBounds(900, 550, 200, 100);
 		frame.getContentPane().add(inventoryButton);
 		

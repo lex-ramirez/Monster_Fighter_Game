@@ -181,6 +181,14 @@ public class BattleForWindow {
         case 1: player.getTeam().get(monsterIndexTurn).useSpecialAbility(targetPlayer.getTeam().get(targetIndex));break;	
         }																												
     }
+	public void playerBaseAttack(int playerTurnIndex, int targetIndex) {
+		Monster playerMonster = mainPlayer.getTeam().get(playerTurnIndex);
+		Monster targetMonster = opposition.getTeam().get(targetIndex);
+		playerMonster.attack(targetMonster);
+		System.out.println(playerMonster.getName() + " attacked " + targetMonster.getName() 
+		+ " for " + playerMonster.getAttackDamage());
+		
+	}
 
 	/**
 	 * One opposition monster attacks a player monster uses the base attack
@@ -225,7 +233,7 @@ public class BattleForWindow {
 				currentMonster.useSpecialAbility(mainPlayer.getTeam().get(attackedIndex));		//Wait no lingering attacks lol
 			}
 		}
-		System.out.println(currentMonster.getSpecialAbilityDescription()+"\n");
+		//System.out.println(currentMonster.getSpecialAbilityDescription()+"\n");
 	}
     
     public boolean hasThisPlayerLost(Player player) {
@@ -282,7 +290,7 @@ public class BattleForWindow {
     	for (int i = 0; i < getMainPlayer().getTeam().size(); i++) {
 			Monster monster = getMainPlayer().getTeam().get(i);
 			if (getPlayerSpecialsUsed()[i] < monster.getSpecialDuration()+1 && getPlayerSpecialsUsed()[i] > 0) {
-				monster.useSpecialAbility(monster.getSpecialTarget()); 	
+				monster.useSpecialAbility(monster.getSpecialTarget()); 
 				incrementPlayerSpecialsUsed(i);			
 			}
 		}
@@ -291,7 +299,7 @@ public class BattleForWindow {
     	for (int i = 0; i < getOpposition().getTeam().size(); i++) {
 			Monster monster = getOpposition().getTeam().get(i);
 			if (getOppositionSpecialsUsed()[i] < monster.getSpecialDuration()+1 && getOppositionSpecialsUsed()[i] > 0) {
-				monster.useSpecialAbility(monster.getSpecialTarget()); 	
+				monster.useSpecialAbility(monster.getSpecialTarget()); 		//Gotta fix lingering specials
 				incrementOppositionSpecialsUsed(i);						
 			}
 		}

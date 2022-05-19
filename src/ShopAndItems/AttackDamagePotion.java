@@ -9,6 +9,17 @@ package ShopAndItems;
 */
 //
 public class AttackDamagePotion extends Item {
+	/**
+	 * The index of this item's counter in the player's inventory
+	 */
+	int inventoryIndex = 0;
+	/**
+	 * gets the index of this item's counter in the player's inventory
+	 * @return the index of this item's counter in the player's inventory
+	 */
+    public int getInventoryIndex() {
+		return inventoryIndex;
+	   }
 
    /**
     * Constructor method for attackDamagePotion 
@@ -16,8 +27,8 @@ public class AttackDamagePotion extends Item {
    public AttackDamagePotion() {
        super(20, "Attack Damage Potion", 70, 63);
    }
-
-   /**
+   
+/**
     * Returns the item description, name, boost, price and sell back price
     * @return
     * Formatted string

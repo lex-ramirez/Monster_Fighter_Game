@@ -8,10 +8,10 @@ public class Player {
 
     private String name;
     private ArrayList<Monster> team  = new ArrayList<Monster>();
-    private ArrayList<Item> inventory = new ArrayList<Item>();
+    private int[] inventory = {0, 0, 0, 0}; // Number of, in order, AttackDamagePotions, AttackEnhancerPotionas
 
     
-    public Player(String name, ArrayList<Monster> team, ArrayList<Item> inventory) {
+    public Player(String name, ArrayList<Monster> team, int[] inventory) {
         super();
         this.name = name;
         this.team = team;
@@ -38,13 +38,13 @@ public class Player {
         this.team = team;
     }
     
-    public ArrayList<Item> getInventory() {
+    public int[] getInventory() {
         return inventory;
     }
-    public void setInventory(ArrayList<Item> inventory) {
+    public void setInventory(int[] inventory) {
         this.inventory = inventory;
     }
-
+/*
     public void addToInventory(Item item) {
         inventory.add(item);
     }
@@ -57,7 +57,7 @@ public class Player {
             throw new IllegalArgumentException("This item is not in the inventory");
         }
     }
-    
+    */
     public void displayTeam() {
         //Some sort of window thing??
     }
