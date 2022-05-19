@@ -1,14 +1,14 @@
 package Battles;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
-import GameEnvironmentElements.*;
-import Monsters.*;
-import ShopAndItems.Item;
 
-public class Battle {
+import GUI.BattleManager;
+import GameEnvironmentElements.Player;
+import Monsters.*;
+
+public class BattleForWindow {
+
 	
 	//***ADD ITEM IMPLEMENTATION***
 	//***FIX SPECIAL***
@@ -24,9 +24,10 @@ public class Battle {
     private int turnNumber = 0;		//Not sure if i need this tbh lol
     private boolean playerHasWon = false;
     private boolean fightIsOver = false;
+    private int targetIndex;
    
 
-    public Battle(Player opposition, int pointsReward, int goldReward, int[] playerSpecialsUsed,
+    public BattleForWindow(Player opposition, int pointsReward, int goldReward, int[] playerSpecialsUsed,
 			boolean isPlayerTurn, int monsterIndexTurn, Player mainPlayer, int[] oppositionSpecialsUsed) {
 		super();
 		this.opposition = opposition;
@@ -39,7 +40,7 @@ public class Battle {
 		this.oppositionSpecialsUsed = oppositionSpecialsUsed;
 	}
 
-	public Battle( Player mainPlayer, Player opposition, int pointsReward, int goldReward) {
+	public BattleForWindow( Player mainPlayer, Player opposition, int pointsReward, int goldReward) {
 		super();
 		this.opposition = opposition;
 		this.pointsReward = pointsReward;
@@ -142,42 +143,42 @@ public class Battle {
 		this.playerHasWon = playerHasWon;
 	}
 
-	public void chooseAttack(Player player, int monsterIndexTurn) {
-        Scanner s = new Scanner(System.in);
-        
-        //Select whether to use base attack or special ability
-        System.out.println("Monster selected is " + player.getTeam().get(monsterIndexTurn).getName());
-        System.out.println("Press 1 to use base attack: " + player.getTeam().get(monsterIndexTurn).getAttackDamage() + " damage");
-        System.out.println("Press 2 to use special attack: " + player.getTeam().get(monsterIndexTurn).getSpecialAbilityDescription());
-        int selectedOption = s.nextInt();
-        if (selectedOption == 2) {
+	public int getTargetIndex() {
+		return targetIndex;
+	}
+
+	public void setTargetIndex(int targetIndex) {
+		this.targetIndex = targetIndex;
+	}
+
+	public void chooseAttack(Player player, int monsterIndexTurn, int targetIndex, int turnTypeIndex) {
+        if (turnTypeIndex == 1) {
         	if (playerSpecialsUsed[monsterIndexTurn] >= player.getTeam().get(monsterIndexTurn).getSpecialDuration()) {
     			System.out.println("This monster has already used its special attack!");
     			System.out.println("You must instead use your base attack with this monster");
-    			selectedOption = 1;
+    			turnTypeIndex = 1;
         	} 
         	else
         		playerSpecialsUsed[monsterIndexTurn] = 1;	//How do you use this with a base attack re choosing  aterget/ remembering the target somehow
         }
         
-        //Select which monster to apply the  attack to
-        System.out.println("Choose which index to apply the attack to (0, 1, 2)");
-        int targetIndex = s.nextInt();
-        
         //Makes sure that if the special ability is selected, and the ability should 
         //be applied to a teammate, it is
         Player targetPlayer = opposition;
-        if (targetIndex == 2 && player.getTeam().get(monsterIndexTurn).getSpecialIsFriendly())
+        if (targetIndex == 1 && player.getTeam().get(monsterIndexTurn).getSpecialIsFriendly())
         	targetPlayer = player;
-        while (targetPlayer.getTeam().get(targetIndex).hasFainted()) {
+        
+        /*
+        while (targetPlayer.getTeam().get(targetIndex).hasFainted()) {					//Should be able to just make fainted monsters unclickable
         	System.out.println("That monster has fainted! Choose again");
         	System.out.println("Choose which index to apply the attack to (0, 1, 2)");
         	targetIndex = s.nextInt();
         }
+        */
         //Actually apply the attack/ability
-        switch(selectedOption) {
-        case 1: player.getTeam().get(monsterIndexTurn).attack(opposition.getTeam().get(targetIndex));break;
-        case 2: player.getTeam().get(monsterIndexTurn).useSpecialAbility(targetPlayer.getTeam().get(targetIndex));break;	
+        switch(turnTypeIndex) {
+        case 0: player.getTeam().get(monsterIndexTurn).attack(opposition.getTeam().get(targetIndex));break;
+        case 1: player.getTeam().get(monsterIndexTurn).useSpecialAbility(targetPlayer.getTeam().get(targetIndex));break;	
         }																												
     }
 
@@ -235,7 +236,7 @@ public class Battle {
     	}
     	return hasLost;
     }
-    
+    /*
     public void playBattle() {
 		int seed = (int) System.currentTimeMillis() % 1000000000 % 10000;
     	Random rng = new Random(seed);
@@ -249,6 +250,8 @@ public class Battle {
     		executeLingeringSpecials();														//Execute the lingering specials as required
     		
     		for (int turn = 0; turn < mainPlayer.getTeam().size(); turn++)					//Player takes turn 
+    			//Maybe make selectable monsters have a green border
+    			
 				chooseAttack(mainPlayer, turn);
     		
     		if (hasBattleEnded())
@@ -272,7 +275,7 @@ public class Battle {
     	//Multiply points based on progression through (i.e. number of turns) if lost
     	//undo all the boosts and stuff
     }
-    
+    */
     public void executeLingeringSpecials() {
     	
     	//Check for the player's lingering specials, and apply them if required
@@ -342,33 +345,7 @@ public class Battle {
 			}
 		}
     }
-	
-	public static void main(String[] args) {
-		//Initialise a Battle
-		
-		//THIS BLOCK IS FOR TESTING, AND SHOULD BE CHANGED
-		PoisonMaster myPoisonMaster = new PoisonMaster("My Poisonmaster", 25, 5, "rare", 100, 1, 20, 30, 4, 2);
-		Healer myHealer = new Healer("My Healer", 30, 3, "rare", 150, 4, 12, 19, 7);
-		HypeMan myHypeMan = new HypeMan("My Hype man",  20,  4,  "Common",  85,  2,  9, 15,  3);
-		ArrayList<Monster> starterTeam = new ArrayList<Monster>();
-		starterTeam.add(myHypeMan);
-		starterTeam.add(myPoisonMaster);
-		starterTeam.add(myHealer);
-		Player testPlayer = new Player("Me!", starterTeam, new ArrayList<Item>());
-		
-		//This bit stays: actually makes a battle
-		Battle battle = new Battle(testPlayer, PlayerDirectory.getAiPlayers().get(0), 100, 100);
-		battle.playBattle();
-    	
-	}
 
-
-	@Override
-	public String toString() {
-		return "Battle [opposition=" + opposition + ",\npointsReward=" + pointsReward + ", goldReward=" + goldReward
-				+ ", playerSpecialsUsed=" + Arrays.toString(playerSpecialsUsed) + ", isPlayerTurn=" + isPlayerTurn
-				+ ", monsterIndexTurn=" + monsterIndexTurn + ",\nmainPlayer=" + mainPlayer + "]";
-	}
 
 	public String displayBattleState() {
 		String stateString = "****************BATTLE STATE****************\n";

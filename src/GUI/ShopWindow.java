@@ -21,38 +21,68 @@ import ShopAndItems.Item;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Main shop window in GUI
+ * @author sammiller
+ *
+ */
 public class ShopWindow {
-
+	/**
+	 * the frame on which the elements of the shop are placed
+	 */
 	private JFrame frame;
+	/**
+	 * The shop manager to control the shop-related windows (including this one)
+	 */
 	private ShopManager manager;
 
-	
+	/**
+	 * Returns the JFrame on which the elements of the shop are placed
+	 * @return the JFrame on which the elements of the shop are placed
+	 */
+	public JFrame getFrame() {
+		return frame;
+	}
 
 	/**
 	 * Create the application.
+	 * @param incomingManager the manager which will manage the shop
 	 */
 	public ShopWindow(ShopManager incomingManager) {
 		manager = incomingManager;
 		initialize();
 		frame.setVisible(true);
 	}
-	
+	/**
+	 * Close the window
+	 */
 	public void closeWindow() {
 		frame.dispose();
 	}
-	
+	/**
+	 * Asks the manager to close the window, and thus any subsequent actions
+	 *  can be carried out by the manager
+	 */
 	public void finishedWindow() {
 		manager.closeShopWindow(this);
 	}
-	
+	/**
+	 * Displays the tutorial screen again
+	 */
 	public void replayTutorial() {
 		manager.redisplayTutorial(this);
 	}
-	
+	/**
+	 * Gets the inventory of Items carried by the shop
+	 * @return an ArrayList of Items carried by the shop
+	 */
 	public ArrayList<Item> getItems() {
 		return manager.getShop().getItemList();
 	}
-	
+	/**
+	 * Opens a confirmation window to buy an item
+	 * @param item the item the player is being asked to confirm buying
+	 */
 	public void openConfirmWindow(Item item) {
 		manager.launchConfirmWindow(item);
 	}
@@ -88,7 +118,7 @@ public class ShopWindow {
 		frame.getContentPane().add(btnReplayTutorial);
 		
 		//Add the first potion
-		JLabel potion1Image = new JLabel("");
+		JButton potion1Image = new JButton("");
 		//Maybe make this a button not a label
 		potion1Image.addMouseListener(new MouseAdapter() {
 			@Override
@@ -111,7 +141,7 @@ public class ShopWindow {
 		//***CHANGE DESCRIPTIONS TO REMOVE UNECCESSARY STUFF***
 		//abstract class
 		
-		JLabel potion1Name = new JLabel(getItems().get(0).getName());
+		JButton potion1Name = new JButton(getItems().get(0).getName());
 		potion1Name.setBounds(215, 84, 256, 16);
 		frame.getContentPane().add(potion1Name);
 		

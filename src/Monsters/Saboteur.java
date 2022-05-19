@@ -106,8 +106,8 @@ public class Saboteur extends Monster {
 	 */
 	@Override
 	public String getSpecialAbilityDescription() {
-		return String.format("The Saboteur applies a weakening effect of %d hit points to %s's base attack",
-				getWeakenAmount(), getSpecialTarget().getName());
+		return String.format("The Saboteur applies a weakening effect of %d hit points to its target's base attack",
+				getWeakenAmount());
 	}
 
 	/**

@@ -11,6 +11,7 @@ package Monsters;
 //Test edit to trial git
 
 public class Archer extends Monster {
+	//image change to spiky tail thing
 
 	/**
 	 * The amount of damage the special attack does to the target monster

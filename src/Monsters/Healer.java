@@ -116,7 +116,7 @@ public class Healer extends Monster {
 	 */
 	@Override
 	public String getSpecialAbilityDescription() {
-		return "The healer can restore a teammate's health by " + healAmount + "hp, or to max health";
+		return "The healer can restore a teammate's health by " + healAmount + "hp";
 	}
 
 	/**

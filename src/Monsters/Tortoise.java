@@ -51,8 +51,8 @@ public class Tortoise extends Monster {
 
     @Override
     public String getSpecialAbilityDescription() {
-        return "The Tortoise has a special ability to shield " + getSpecialTarget().getName()
-        		+ " from all damage for the remainder of one turn per battle";
+        return "The Tortoise has a special ability to shield a teammate from "
+        		+ "all damage for the remainder of one turn, once per battle";
     }
 
     @Override
