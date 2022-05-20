@@ -7,7 +7,7 @@ package ShopAndItems;
  * all the different in game items inherit. 
  *
  */
-public class Item implements Purchasable {
+public abstract class Item implements Purchasable {
 	
 	/**
 	 * @Variables
@@ -94,12 +94,17 @@ public class Item implements Purchasable {
 		sellBackPrice = (int)(price * percentage);
 		
 	}
-
+	
+	public abstract int getInventoryIndex();
+	
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
+	public String getDrawingId() {
+		return "noun-potion-1071046.png";
+	}
 	
 }
