@@ -24,7 +24,7 @@ public class Tortoise extends Monster {
      */
     public Tortoise(String name, int maxHealth, int attackDamage, String rarity, int price, int level, int xp,
             int levelUpXpAmount) {
-        super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, true, 1, false, "tortoise-monster-drawing.png");
+        super(name, maxHealth, attackDamage, rarity, price, level, xp, levelUpXpAmount, true, 1, false, "tortoise-drawing.png");
         previousHealth = maxHealth;
     }
 

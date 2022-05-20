@@ -44,8 +44,8 @@ public class BattleManager {
 		closeBattleWindow(battleWindow);
 	}
 	
-	public void launchInventory() {
-		BattleInventory window = new BattleInventory(this);
+	public void launchInventory(int PlayerTurn) {
+		BattleInventory window = new BattleInventory(this, PlayerTurn);
 	}
 	
 	public void closeInventory(BattleInventory inventory) {
@@ -71,6 +71,13 @@ public class BattleManager {
 	public static void main(String[] args) {
 		//Test whether the monsters' health updates dynamically on GUI or whether an observer kinda vibe is needed
 		//or like a loop after each turn to update stats?
+		//need a battle tutorial screen (turn bugs into features- if you dont press base/special attack, itll just stay what it was)
+		//make a refreshHealth(Monster monster) method
+		//can use the example class for name check and dialog boxes
+		
+		//***FAINTING DOESNT WORK***
+		//TORTOISE'S HEALTH DOESNT GO BACK DOWN
+		//IM NOT CALLING UNDO SPECIAL!!!!
 		PoisonMaster myPoisonMaster = new PoisonMaster("My Poisonmaster", 25, 5, "rare", 100, 1, 20, 30, 4, 2);
 		Healer myHealer = new Healer("My Healer", 30, 3, "rare", 150, 4, 12, 19, 7);
 		HypeMan myHypeMan = new HypeMan("My Hype man",  20,  4,  "Common",  85,  2,  9, 15,  3);
@@ -78,7 +85,7 @@ public class BattleManager {
 		starterTeam.add(myHypeMan);
 		starterTeam.add(myPoisonMaster);
 		starterTeam.add(myHealer);
-		int[] inv = {0, 0, 0, };
+		int[] inv = {1, 3, 2, 6};
 		Player testPlayer = new Player("Me!", starterTeam, inv);
 		/*
 		Battle battle = new Battle(testPlayer, PlayerDirectory.getAiPlayers().get(0), 100, 100);

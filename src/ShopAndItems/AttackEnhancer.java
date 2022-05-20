@@ -1,5 +1,7 @@
 package ShopAndItems;
 
+import Monsters.Monster;
+
 /**
  * @author Lex Ramirez 
  * attackEnhancer represents an 'Attack Enhancer' item within the game
@@ -35,7 +37,17 @@ public class AttackEnhancer extends Item {
      */
     @Override
     public String getDescription() {
-        return String.format("%s increases attack damage by %d\nPrice: %d gold\nSell back price: %d gold", 
-                getName(), useItemBoost(), getPrice(), getSellBackPrice());
+        return String.format("%s increases attack damage by %d", 
+                getName(), getItemBoost(), getPrice(), getSellBackPrice());
     }
+
+	@Override
+	public void useItemBoost(Monster targetMonster) {
+		targetMonster.setAttackDamage(targetMonster.getAttackDamage()+getItemBoost());
+	}
+
+	@Override
+	public String getDrawingId() {
+		return "attack-enhancer-drawing.png";
+	}
 }

@@ -9,17 +9,22 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTable;
 
 import Monsters.Monster;
 
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.border.BevelBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -40,12 +45,11 @@ public class BattleWindow {
 	private int HEALTH_BAR_HEIGHT = 16;
 	private int SCREEN_WIDTH = 1200;
 	private int SCREEN_HEIGHT = 750;
-	private String CHOOSE_ATTACK_PROMPT = "Choose whether you want to use your base attack or your special ability:";
 
 	int targetIndex;
 	int turnTypeIndex; // is this used?
 	int playerTurnIndex = 0;
-	
+	private JProgressBar[] healthBars = {new JProgressBar(), new JProgressBar(), new JProgressBar(), new JProgressBar(), new JProgressBar(), new JProgressBar()};
 	/**
 	 * Create the application.
 	 */
@@ -81,17 +85,25 @@ public class BattleWindow {
 		this.turnTypeIndex = turnTypeIndex;
 	}
 
-/*
-	public synchronized int chooseTurnType () {
-		buttonPushed = false;
-		prompt.setText(CHOOSE_ATTACK_PROMPT);
-		while (!buttonPushed) {
-			wait();
+	public void makeHealthProgressBar(int index, int pos_x, int pos_y) {
+		Monster monster;
+		if (pos_y < 250) {
+			monster = manager.getBattle().getOpposition().getTeam().get(index);
+			index = index + 3;
 		}
+		else 
+			monster = manager.getBattle().getMainPlayer().getTeam().get(index);
 		
+		healthBars[index] = new JProgressBar(0, monster.getMaxHealth());
+		healthBars[index].setBounds(pos_x, pos_y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT);
+		healthBars[index].setSize(new Dimension(HEALTH_BAR_WIDTH,HEALTH_BAR_HEIGHT));
+		healthBars[index].setValue(monster.getMaxHealth());
+		healthBars[index].setString(Integer.toString((monster.getMaxHealth()))+"/"
+				+ Integer.toString((monster.getMaxHealth())));
+		healthBars[index].setStringPainted(true);
+		frame.getContentPane().add(healthBars[index]);
 	}
-*/
-	
+	/*
 	public void makeHealthBar(Monster monster, int pos_x, int pos_y) {
 		int greenAmount = (int) Math.floor((double) HEALTH_BAR_WIDTH * monster.getCurrentHealth() / monster.getMaxHealth());
 		JLabel healthBarGreen = new JLabel("");
@@ -105,7 +117,7 @@ public class BattleWindow {
 		healthBarRed.setOpaque(true);
 		healthBarRed.setBounds(pos_x+greenAmount, pos_y, HEALTH_BAR_WIDTH-greenAmount, HEALTH_BAR_HEIGHT);
 		frame.getContentPane().add(healthBarRed);
-	}
+	}*/
 	
 	public void placeMonster(Monster monster, int pos_x, int pos_y, int index) {
 		JLabel monsterImage = new JLabel("");
@@ -127,24 +139,37 @@ public class BattleWindow {
 			public void mouseReleased(MouseEvent e) {
 				border.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 				if (playerTurnIndex < manager.getBattle().getMainPlayer().getTeam().size()) {
-					manager.getBattle().playerBaseAttack(playerTurnIndex, getTargetIndex());
-					playerTurnIndex++;
-				}
+					if (turnTypeIndex == 0)
+						manager.getBattle().playerBaseAttack(playerTurnIndex, getTargetIndex());
+					else
+						manager.getBattle().playerSpecialAttack(playerTurnIndex, getTargetIndex()); // Add a check for whether the special has been done
+					playerTurnIndex++;																//i.e. for like whether
+					healthBars[getTargetIndex()+3].setValue(manager.getBattle().getOpposition().getTeam().get(getTargetIndex()).getCurrentHealth());
+					healthBars[getTargetIndex()+3].setString(Integer.toString((manager.getBattle().getOpposition().getTeam().get(getTargetIndex())
+							.getCurrentHealth()))+"/"+manager.getBattle().getOpposition().getTeam().get(getTargetIndex()).getMaxHealth());
+					healthBars[getTargetIndex()+3].setStringPainted(true);
+				}	
 				if (playerTurnIndex == manager.getBattle().getMainPlayer().getTeam().size()) {
 					playerTurnIndex = 0;
 					manager.getBattle().aiTakesTurn(rng);
+					for (int i = 0; i< manager.getBattle().getMainPlayer().getTeam().size();i++) {
+						healthBars[i].setValue(manager.getBattle().getMainPlayer().getTeam().get(i).getCurrentHealth());
+						healthBars[i].setString(Integer.toString((manager.getBattle().getMainPlayer().getTeam().get(i)
+								.getCurrentHealth()))+"/"+manager.getBattle().getMainPlayer().getTeam().get(i).getMaxHealth());; //changed to string bit from monster to manager..
+						healthBars[i].setStringPainted(true);
+					}
+					manager.getBattle().undoLingeringSpecials();
+					manager.getBattle().executeLingeringSpecials();
 					System.out.println(manager.getBattle().displayBattleState());
 				}
+				prompt.setText("What would you like "+ manager.getBattle().getMainPlayer().getTeam().get(playerTurnIndex).getName()
+						+ " to do?");
 			}
 		});
 		frame.getContentPane().add(border);
 		
-		makeHealthBar(monster, pos_x + 130, pos_y + 17);
-		
-		// Make a health counter next to the health bar
-		JLabel healthCounter = new JLabel(String.format("%d/%d", monster.getCurrentHealth(), monster.getMaxHealth()));
-		healthCounter.setBounds(pos_x + 135 + HEALTH_BAR_WIDTH, pos_y+17, 61, 16);
-		frame.getContentPane().add(healthCounter);
+		//Changed from makeHealthBar
+		makeHealthProgressBar(index, pos_x + 130, pos_y + 17);
 		
 		//monsterImage.setContentAreaFilled(false);
 		monsterImage.setOpaque(false);
@@ -155,6 +180,8 @@ public class BattleWindow {
 		monsterLabel.setBounds(pos_x+130, pos_y, 250, 180);
 		monsterLabel.setVerticalAlignment(SwingConstants.TOP);
 		frame.getContentPane().add(monsterLabel);
+		
+		//return healthCounter;
 	}
 
 	/**
@@ -166,9 +193,12 @@ public class BattleWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		prompt = new JLabel("New label");
-		prompt.setBounds(100, 475, 61, 16);
+		prompt = new JLabel("What would you like "+ manager.getBattle().getMainPlayer().getTeam().get(playerTurnIndex).getName()
+				+ " to do?");
+		prompt.setBounds(100, 475, 735, 16);
 		frame.getContentPane().add(prompt);
+		
+		JLabel[] healthCounters = {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), new JLabel("")};
 		
 		//Opposition monster slots
 		if (manager.getBattle().getOpposition().getTeam().size() > 0) {
@@ -197,8 +227,7 @@ public class BattleWindow {
 			Monster monster = manager.getBattle().getMainPlayer().getTeam().get(2);
 			placeMonster(monster, 815, 300, 2);
 		}
-		
-		
+				
 		JButton baseAttackButton = new JButton("Base Attack");
 		baseAttackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -213,7 +242,48 @@ public class BattleWindow {
 		JButton SpecialAbilityButton = new JButton("Special Attack");
 		SpecialAbilityButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setTurnTypeIndex(0);
+				//AI (archer) special attack only works on one person, not the whole team
+				setTurnTypeIndex(1);
+				if (manager.getBattle().getMainPlayer().getTeam().get(playerTurnIndex).isTeamWideSpecial()) {
+					if (playerTurnIndex < manager.getBattle().getMainPlayer().getTeam().size()) {
+						manager.getBattle().playerSpecialAttack(playerTurnIndex, getTargetIndex());
+						for (int i = 0; i < manager.getBattle().getOpposition().getTeam().size(); i++) {
+							Monster targetMonster = manager.getBattle().getOpposition().getTeam().get(i);
+							healthBars[i+3].setValue(targetMonster.getCurrentHealth());
+							healthBars[i+3].setString(Integer.toString((targetMonster.getCurrentHealth()))
+									+"/"+ targetMonster.getMaxHealth()); //changed to string bit from monster to manager..
+							healthBars[i+3].setStringPainted(true);
+						}
+						playerTurnIndex++;
+						prompt.setText("What would you like "+ manager.getBattle().getMainPlayer().getTeam().get(playerTurnIndex).getName()
+								+ " to do?");
+					}
+					else {
+						manager.getBattle().playerSpecialAttack(playerTurnIndex, getTargetIndex());
+						//Set the health bar appropriately
+						Monster targetMonster = manager.getBattle().getOpposition().getTeam().get(targetIndex);
+						healthBars[getTargetIndex()].setValue(targetMonster.getCurrentHealth());
+						healthBars[getTargetIndex()].setString(Integer.toString((targetMonster.getCurrentHealth()))
+								+"/"+ targetMonster.getMaxHealth()); //changed to string bit from monster to manager..
+						healthBars[getTargetIndex()].setStringPainted(true);
+						
+						playerTurnIndex = 0;
+						prompt.setText("What would you like "+ manager.getBattle().getMainPlayer().getTeam().get(playerTurnIndex).getName()
+								+ " to do?");
+						manager.getBattle().aiTakesTurn(rng);
+						for (int i = 0; i< manager.getBattle().getMainPlayer().getTeam().size();i++) {
+							//Not sure i trust this
+							healthBars[i].setValue(manager.getBattle().getMainPlayer().getTeam().get(i).getCurrentHealth());
+							healthBars[i].setString(Integer.toString((manager.getBattle().getMainPlayer().getTeam().get(i).getCurrentHealth()))
+									+"/"+manager.getBattle().getMainPlayer().getTeam().get(i).getMaxHealth()); //changed to string bit from monster to manager..
+							healthBars[i].setStringPainted(true);
+							//
+						}
+						manager.getBattle().undoLingeringSpecials();
+						manager.getBattle().executeLingeringSpecials();
+						System.out.println(manager.getBattle().displayBattleState());
+					}
+				}
 			}
 		});
 		SpecialAbilityButton.setBounds(500, 550, 200, 100);
@@ -222,7 +292,7 @@ public class BattleWindow {
 		JButton inventoryButton = new JButton("Open Inventory");
 		inventoryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				manager.launchInventory();
+				manager.launchInventory(playerTurnIndex);
 			}
 		});
 		inventoryButton.setBounds(900, 550, 200, 100);
@@ -256,7 +326,6 @@ public class BattleWindow {
 		battleInstruction.setVerticalAlignment(SwingConstants.TOP);
 		battleInstruction.setBounds(53, 447, 784, 73);
 		frame.getContentPane().add(battleInstruction);
-		
 
 	
 	}

@@ -1,5 +1,7 @@
 package ShopAndItems;
 
+import Monsters.Monster;
+
 /**
 * @author Lex Ramirez
 * attackDamagePotion represents an 'Attack Damage Potion' item within the game
@@ -25,7 +27,7 @@ public class AttackDamagePotion extends Item {
     * Constructor method for attackDamagePotion 
     */
    public AttackDamagePotion() {
-       super(20, "Attack Damage Potion", 70, 63);
+       super(4, "Attack Damage Potion", 70, 63);
    }
    
 /**
@@ -35,8 +37,19 @@ public class AttackDamagePotion extends Item {
     */
    @Override
    public String getDescription() {
-       return String.format("%s increases attack damage by %d\nPrice: %d gold\nSell back price: %d gold", 
-               getName(), useItemBoost(), getPrice(), getSellBackPrice());
+       return String.format("%s increases attack damage by %d", 
+               getName(), getItemBoost(), getPrice(), getSellBackPrice());
    }
+
+@Override
+public void useItemBoost(Monster targetMonster) {
+	targetMonster.setAttackDamage(targetMonster.getAttackDamage()+getItemBoost());
+	
+}
+
+@Override
+public String getDrawingId() {
+	return "attack-damage-potion-drawing.png";
+}
 
 }

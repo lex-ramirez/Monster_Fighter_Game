@@ -189,6 +189,32 @@ public class BattleForWindow {
 		+ " for " + playerMonster.getAttackDamage());
 		
 	}
+	
+	public void playerSpecialAttack(int playerTurnIndex, int targetIndex) {
+		Monster playerMonster = mainPlayer.getTeam().get(playerTurnIndex);
+		Monster targetMonster = opposition.getTeam().get(targetIndex);
+		if (playerMonster.isTeamWideSpecial()) {
+			if (!playerMonster.getSpecialIsFriendly()) {
+				for (Monster target : opposition.getTeam()) { //can remove these braces if you remove console stuff
+					playerMonster.useSpecialAbility(target);
+					System.out.println(playerMonster.getName() + " "+ playerMonster.getSpecialAbilityDescription()
+					+ " on " + target.getName());
+				}
+			}
+			else {
+				for (Monster target : mainPlayer.getTeam()) { //can remove these braces if you remove console stuff
+					playerMonster.useSpecialAbility(target);
+					System.out.println(playerMonster.getName() + " "+ playerMonster.getSpecialAbilityDescription()
+					+ " on " + target.getName());
+				}
+			}
+		}
+		else {
+			playerMonster.useSpecialAbility(targetMonster);
+			System.out.println(playerMonster.getName() + " "+ playerMonster.getSpecialAbilityDescription()
+			+ " on " + targetMonster.getName());
+		}
+	}
 
 	/**
 	 * One opposition monster attacks a player monster uses the base attack
@@ -361,7 +387,8 @@ public class BattleForWindow {
 		for (int i = 0; i < mainPlayer.getTeam().size(); i++) {
 			Monster monster = mainPlayer.getTeam().get(i);
 			stateString = stateString + i +": "+ monster.getName() +", hasFainted=" 
-			+ monster.hasFainted() +", currentHealth="+ monster.getCurrentHealth() + "\n";
+			+ monster.hasFainted() +", currentHealth="+ monster.getCurrentHealth()
+			+" Attack damage="+monster.getAttackDamage()+ "\n";
 		}
 		stateString = stateString + "Inventory: " + mainPlayer.getInventory() + "\n\n";
 		
@@ -369,7 +396,8 @@ public class BattleForWindow {
 		for (int i = 0; i < opposition.getTeam().size(); i++) {
 			Monster monster = opposition.getTeam().get(i);
 			stateString = stateString + i + ": " + monster.getName() + ", hasFainted=" + monster.hasFainted()
-			+ ", currentHealth=" + monster.getCurrentHealth() + "\n";
+			+ ", currentHealth=" + monster.getCurrentHealth()
+			+" Attack damage="+monster.getAttackDamage()+ "\n";
 		}
 		stateString = stateString + "Inventory: " + opposition.getInventory() + "\n";
 		stateString = stateString +"*******************************************\n";

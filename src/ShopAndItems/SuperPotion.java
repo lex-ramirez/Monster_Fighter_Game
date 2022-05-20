@@ -1,5 +1,7 @@
 package ShopAndItems;
 
+import Monsters.Monster;
+
 /**
 * @author Lex Ramirez
 * superPotion represents a 'Super Potion' item within the game, this inherits 
@@ -25,7 +27,7 @@ public class SuperPotion extends Item {
     * Constructor method of a super potion
     */
    public SuperPotion() {
-       super(150, "Super Potion", 250, 225);
+       super(15, "Super Potion", 250, 225);
    }
 
    /**
@@ -35,7 +37,17 @@ public class SuperPotion extends Item {
     */
    @Override
    public String getDescription() {
-       return String.format("%s heals for %d health\nPrice: %d gold\nSell back price: %d gold", 
-               getName(), useItemBoost(), getPrice(), getSellBackPrice());
+       return String.format("%s heals for %d health", 
+               getName(), getItemBoost(), getPrice(), getSellBackPrice());
    }
+
+@Override
+public void useItemBoost(Monster targetMonster) {
+	targetMonster.setCurrentHealth(targetMonster.getCurrentHealth()+getItemBoost());
+}
+
+@Override
+public String getDrawingId() {
+	return "super-potion-drawing.png";
+}
 }

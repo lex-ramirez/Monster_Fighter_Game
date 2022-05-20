@@ -84,11 +84,13 @@ public class PlayerDirectory {
     //removed static
 	public ArrayList<Item> addToList() {
     	ArrayList<Item> availableItems = new ArrayList<Item>();
+    	AttackDamagePotion attackDamagePotion = new AttackDamagePotion();
 		AttackEnhancer attackEnhancer = new AttackEnhancer();
-		//SmallPotion smallPotion = new SmallPotion();
+		SmallPotion smallPotion = new SmallPotion();
 		SuperPotion superPotion = new SuperPotion();
+		availableItems.add(attackDamagePotion);
 		availableItems.add(attackEnhancer);
-		//availableItems.add(smallPotion);
+		availableItems.add(smallPotion);
 		availableItems.add(superPotion);
 		return availableItems;
 	}

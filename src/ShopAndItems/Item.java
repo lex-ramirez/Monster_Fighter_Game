@@ -1,5 +1,7 @@
 package ShopAndItems;
 
+import Monsters.Monster;
+
 /**
  * @author Lex Ramirez
  * 
@@ -32,15 +34,17 @@ public abstract class Item implements Purchasable {
 		sellBackPrice = sellPrice;
 	}
 
-	/**
-	 * Method which returns the boost multiplier, useful for when the item is 
-	 * used in game as the value can simply be returned and added to a 
-	 * monster statistic
-	 * @return itemBoost (integer)
-	 */
-	public int useItemBoost() {
+	public int getItemBoost() {
 		return itemBoost;
 	}
+
+
+	public void setItemBoost(int itemBoost) {
+		this.itemBoost = itemBoost;
+	}
+
+
+	public abstract void useItemBoost(Monster targetMonster);
 	
 	/**
 	 * Method which returns the name of the item
@@ -98,13 +102,9 @@ public abstract class Item implements Purchasable {
 	public abstract int getInventoryIndex();
 	
 	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract String getDescription();
 	
-	public String getDrawingId() {
-		return "noun-potion-1071046.png";
-	}
+	public abstract String getDrawingId();
+
 	
 }

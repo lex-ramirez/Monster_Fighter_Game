@@ -1,5 +1,7 @@
 package ShopAndItems;
 
+import Monsters.Monster;
+
 /**
 * @author Lex Ramirez
 * smallPotion subclass represents a 'Small Potion' item within the game,
@@ -25,7 +27,7 @@ public class SmallPotion extends Item {
     * Constructor method of a small potion
     */
    public SmallPotion() {
-       super(50, "Small Potion", 100, 90);
+       super(5, "Small Potion", 100, 90);
    }
 
    /**
@@ -35,7 +37,17 @@ public class SmallPotion extends Item {
     */
    @Override
    public String getDescription() {
-       return String.format("%s heals for %d health\nPrice: %d gold\nSell back price: %d gold", 
-               getName(), useItemBoost(), getPrice(), getSellBackPrice());
+       return String.format("%s heals for %d health", 
+               getName(), getItemBoost(), getPrice(), getSellBackPrice());
    }
+
+@Override
+public void useItemBoost(Monster targetMonster) {
+	targetMonster.setCurrentHealth(targetMonster.getCurrentHealth()+getItemBoost());
+}
+
+@Override
+public String getDrawingId() {
+	return "small-potion-drawing.png";
+}
 }
